@@ -62,6 +62,42 @@ workloads:
     total_time: 3600
   test_idle_all:
     total_time: 3600
+  test_refresh_providers_bulk:
+    scenarios:
+      - name: 30m-vmware-small
+        providers:
+          - vmware-small
+        time_between_refresh: 60
+        total_time: 1800
+        grafana_dashboard: cfme-vmware-system-performance
+      - name: 30m-2xsmall-vmware-rhevm
+        providers:
+          - vmware-small
+          - rhevm-small
+        time_between_refresh: 60
+        total_time: 1800
+        grafana_dashboard: cfme-vmware-redhat-system-performance
+  test_refresh_vms_bulk:
+    scenarios:
+      - name: 30m-vmware-small
+        providers:
+          - vmware-small
+        refresh_sleep_time: 600
+        refresh_size: 5
+        full_refresh_threshold: 100
+        time_between_refresh: 10
+        total_time: 1800
+        grafana_dashboard: cfme-vmware-system-performance
+      - name: 30m-2xsmall-vmware-rhevm
+        providers:
+          - vmware-small
+          - rhevm-small
+        refresh_sleep_time: 600
+        refresh_size: 5
+        full_refresh_threshold: 100
+        time_between_refresh: 10
+        total_time: 1800
+        grafana_dashboard: cfme-vmware-redhat-system-performance
   test_refresh_providers:
     scenarios:
       - name: 30m-vmware-small

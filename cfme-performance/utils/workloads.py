@@ -16,10 +16,24 @@ def get_refresh_providers_scenarios():
     return []
 
 
+def get_refresh_providers_bulk_scenarios():
+    if (cfme_performance['workloads']['test_refresh_providers_bulk']['scenarios'] and
+            len(cfme_performance['workloads']['test_refresh_providers_bulk']['scenarios']) > 0):
+        return cfme_performance['workloads']['test_refresh_providers_bulk']['scenarios']
+    return []
+
+
 def get_refresh_vms_scenarios():
     if (cfme_performance['workloads']['test_refresh_vms']['scenarios'] and
             len(cfme_performance['workloads']['test_refresh_vms']['scenarios']) > 0):
         return cfme_performance['workloads']['test_refresh_vms']['scenarios']
+    return []
+
+
+def get_refresh_vms_bulk_scenarios():
+    if (cfme_performance['workloads']['test_refresh_vms_bulk']['scenarios'] and
+            len(cfme_performance['workloads']['test_refresh_vms_bulk']['scenarios']) > 0):
+        return cfme_performance['workloads']['test_refresh_vms_bulk']['scenarios']
     return []
 
 
