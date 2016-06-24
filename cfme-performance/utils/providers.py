@@ -580,37 +580,39 @@ def retire_vm(vm_id):
 
     if response.status_code != 200:
         logger.debug(response.text)
+        return False
 
     logger.debug('Retired guest VM: {}, Response: {}'.format(vm_id, response))
     return True
 
 
-def retire_provisioned_vm(vm_name):
-    """"Retire the VMs that was provisioned during a workload via the REST API
-    If the vm hasn't been provisioned yet, this method returns False"""
+def retire_provisioned_vm(vm_tuple):
+    """Retires the Vm specified in the vm_tuple. Expects a the tuple to contain
+    a VM name in index 0, and its provider in index 1. Returns True if successful"""
     starttime = time.time()
+    vm_name, provider_name = vm_tuple
+    logger.debug('Cleaning up: {}'.format(vm_name))
     vm_id = get_vm_id(vm_name)
     result = retire_vm(vm_id)
-    logger.debug('Queued retire for VM in {}s'.format(round(time.time() - starttime, 2)))
-    return result
+    if result:
+        logger.debug('Queued retire for VM in {}s'.format(round(time.time() - starttime, 2)))
+        return result
+    else:
+        logger.error('Could not delete VM: {}'.format(vm_name))
+        return result
 
 
-def retire_provisioned_vms(name_list):
-    """"Retire the VMs that were provisioned during a workload via the REST API"""
+def retire_provisioned_vms(provision_order):
+    """Attempts to retire all VMs in provision_order. Expects provision order to be a list
+    of tuples VM name is in index 0, and its provider's name in index 1"""
     starttime = time.time()
-    vm_ids = get_vm_ids(name_list).values()
-    while len(vm_ids) != len(name_list):
-        logger.warning('Not all VMs have been fully provisioned. Sleeping 30 seconds')
-        time.sleep(30)
-        vm_ids = get_vm_ids(name_list).values()
-    logger.debug('Queuing the retire of the following VMs: {}'.format(vm_ids))
-    while len(vm_ids) > 0:
-        result = retire_vm(vm_ids[0])
-        if result:
-            vm_ids.pop(0)
-        else:
-            vm_ids.append(vm_ids.pop(0))
-    logger.debug('Queued retire for {} provisioned VM(s) in {}s'.format(len(name_list),
+    startsize = len(provision_order)
+
+    for vm_tuple in provision_order[:]:
+        if retire_provisioned_vm(vm_tuple):
+            provision_order.remove(vm_tuple)
+
+    logger.debug('Retired {} VMs in: {}s'.format(startsize - len(provision_order),
         round(time.time() - starttime, 2)))
 
 
@@ -655,9 +657,8 @@ def delete_provisioned_vm(vm_tuple):
 
 
 def delete_provisioned_vms(provision_order):
-    """Attempts to Deletes all VMs in provision_order. Expects provision order to be a 2D list
-    where the inner list contains the VM name in index 0, and its provider's name in index 1
-    Expects cleanup_size to be an integer"""
+    """Attempts to delete all VMs in provision_order. Expects provision order to be a list
+    of tuples VM name is in index 0, and its provider's name in index 1"""
     starttime = time.time()
     startsize = len(provision_order)
 

@@ -26,6 +26,13 @@ def get_provisioning_scenarios():
     return []
 
 
+def get_provisioning_retire_scenarios():
+    if(cfme_performance['workloads']['test_provisioning_retire']['scenarios'] and
+            len(cfme_performance['workloads']['test_provisioning_retire']['scenarios']) > 0):
+        return cfme_performance['workloads']['test_provisioning_retire']['scenarios']
+    return []
+
+
 def get_refresh_providers_scenarios():
     if 'test_refresh_providers' in cfme_performance.workloads:
         if (cfme_performance['workloads']['test_refresh_providers']['scenarios'] and

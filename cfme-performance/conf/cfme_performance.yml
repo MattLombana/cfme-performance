@@ -227,3 +227,33 @@ workloads:
         cleanup_size: 4
         total_time: 1800
         grafana_dashboard: cfme-vmware-redhat-system-performance
+
+  test_provisioning_retire:
+    scenarios:
+      - name: 30m-vmware-small
+        providers:
+          - vmware-small
+        templates:
+          vmware-small:
+            - perf-provision-rhel6
+            - perf-provision-rhel7
+        refresh_sleep_time: 600
+        time_between_provision: 60
+        cleanup_size: 4
+        total_time: 1800
+        grafana_dashboard: cfme-vmware-system-performance
+      - name: 4hr-2xsmall-vmware-rhevm
+        providers:
+          - vmware-small
+          - rhevm-small
+        templates:
+          vmware-small:
+            - perf-provision-rhel6
+            - perf-provision-rhel7
+          rhevm-small:
+            - perf-provision-rhel7
+        refresh_sleep_time: 600
+        time_between_provision: 90
+        cleanup_size: 4
+        total_time: 14400
+        grafana_dashboard: cfme-general-system-performance
