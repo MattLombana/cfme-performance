@@ -65,6 +65,7 @@ def test_workload_smartstate_analysis(request, scenario):
                 "ManageIQ::Providers::Redhat::InfraManager"):
             set_cfme_server_relationship(ssh_client,
                 cfme_performance['appliance']['appliance_name'])
+    total_vms_scanned = 0
 
     # Get list of VM ids by mapping provider name + vm name to the vm id
     vm_ids_to_scan = map_vms_to_ids(scenario['vms_to_scan'])
@@ -77,6 +78,8 @@ def test_workload_smartstate_analysis(request, scenario):
     while ((time.time() - starttime) < total_time):
         start_ssa_time = time.time()
         scan_provider_vms_bulk(vm_ids_to_scan)
+        total_vms_scanned += len(vm_ids_to_scan)
+
         iteration_time = time.time()
 
         ssa_time = round(iteration_time - start_ssa_time, 2)
@@ -95,4 +98,5 @@ def test_workload_smartstate_analysis(request, scenario):
             logger.warn('Time to Queue SmartState Analyses ({}) exceeded time between '
                 '({})'.format(ssa_time, time_between_analyses))
 
+    logger.info('Queued {} VM scans during the scenario.'.format(total_vms_scanned))
     logger.info('Test Ending...')

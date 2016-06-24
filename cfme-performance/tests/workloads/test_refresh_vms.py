@@ -72,6 +72,7 @@ def test_refresh_vms(request, scenario):
     vm_ids = get_all_vm_ids()
     vm_ids_iter = cycle(vm_ids)
     logger.debug('Number of VM IDs: {}'.format(len(vm_ids)))
+    total_refreshed_VMs = 0
 
     # Variable amount of time for refresh workload
     total_time = scenario['total_time']
@@ -82,6 +83,7 @@ def test_refresh_vms(request, scenario):
         start_refresh_time = time.time()
         refresh_list = [next(vm_ids_iter) for x in range(refresh_size)]
         refresh_provider_vms_bulk(refresh_list)
+        total_refreshed_VMs += refresh_size
         iteration_time = time.time()
 
         refresh_time = round(iteration_time - start_refresh_time, 2)
@@ -100,4 +102,5 @@ def test_refresh_vms(request, scenario):
             logger.warn('Time to Queue VM Refreshes ({}) exceeded time between '
                 '({})'.format(refresh_time, time_between_refresh))
 
+    logger.info('Queued {} VM refreshes during the scenario.'.format(total_refreshed_VMs))
     logger.info('Test Ending...')

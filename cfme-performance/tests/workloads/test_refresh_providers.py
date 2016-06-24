@@ -53,6 +53,7 @@ def test_refresh_providers(request, scenario):
     set_server_roles_workload_refresh_providers(ssh_client)
     add_providers(scenario['providers'])
     id_list = get_all_provider_ids()
+    total_refreshed_size = 0
 
     # Variable amount of time for refresh workload
     total_time = scenario['total_time']
@@ -62,6 +63,7 @@ def test_refresh_providers(request, scenario):
     while ((time.time() - starttime) < total_time):
         start_refresh_time = time.time()
         refresh_providers_bulk(id_list)
+        total_refreshed_size += len(id_list)
         iteration_time = time.time()
 
         refresh_time = round(iteration_time - start_refresh_time, 2)
@@ -80,4 +82,5 @@ def test_refresh_providers(request, scenario):
             logger.warn('Time to Queue Refreshes ({}) exceeded time between '
                 '({})'.format(refresh_time, time_between_refresh))
 
+    logger.info('Queued {} provider refreshes during the scenario.'.format(total_refreshed_size))
     logger.info('Test Ending...')
