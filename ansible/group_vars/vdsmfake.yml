@@ -1,0 +1,56 @@
+appliance:
+  appliance_name: infra-rhevm36-small
+  ip_address: 10.20.30.40
+  rest_api:
+    username: admin@internal
+    password: password
+  ssh:
+    username: root
+    password: toor
+fake_resources:
+  clusters:
+    number: 2
+    cpu: Intel Nehalem
+    datacenter: Default
+  hosts:
+    number: 10
+    password: smartvm
+  storage-domains:
+    number: 12
+    storage_type: data
+    fs_type: nfs
+  networks:
+    number: 5
+    datacenter: Default
+  vms:
+    number: 100
+    template: Blank
+    memory_size: 536870912 # in bytes
+    disk_size: 10485760000 # in bytes
+    network: ovirtmgmt
+
+############  Template sizes  ####################
+# small:
+#   clusters: 2
+#   hosts: 10
+#   networks: 5
+#   vms: 100
+#   storage_domains: 13
+# medium:
+#   clusters: 10
+#   hosts: 50
+#   storage_domains: 61
+#   networks: 10
+#   vms: 1000
+# Large:
+#   clusters: 10
+#   hosts: 100
+#   storage_domains: 121
+#   networks: 20
+#   vms: 3000
+# Extra Large:
+#   clusters: 20
+#   hosts: 200
+#   storage_domains: 221
+#   networks: 40
+#   vms: 10000

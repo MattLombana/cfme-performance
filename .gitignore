@@ -17,6 +17,9 @@ ansible/group_vars/all.local.yml
 # group_vars/create_appliances.local.yml file
 ansible/group_vars/create_appliances.local.yml
 
+# group_vars/vdsmfake.local.yml file
+ansible/group_vars/vdsmfake.local.yml
+
 # Performance Tests yaml config files
 !cfme-performance/conf/*.yml
 cfme-performance/conf/*.local.yml

@@ -1,6 +1,10 @@
 ---
 #
+<<<<<<< 2a89532642499d1c9153f9b94c68a18147f4c731
 # Playbook to create appliances used in testing
+=======
+# Playbook to create a rhevm appliance with VDSM Fake installed
+>>>>>>> Add initial playbooks, README, and base files for future playbooks
 #
 
 - hosts: 127.0.0.1
@@ -9,8 +13,11 @@
   vars_files:
     - ../group_vars/all.yml
     - ../group_vars/all.local.yml
+<<<<<<< 2a89532642499d1c9153f9b94c68a18147f4c731
     - ../group_vars/create_appliances.yml
     - ../group_vars/create_appliances.local.yml
+=======
+>>>>>>> Add initial playbooks, README, and base files for future playbooks
   roles:
     - get-certificates
     - create-cfme-appliance

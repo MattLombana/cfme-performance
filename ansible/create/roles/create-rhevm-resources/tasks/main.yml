@@ -1,0 +1,8 @@
+---
+#
+# Tasks to create fake resources on a rhev appliance
+#
+
+
+- name: fake-rhevm-resource-setup
+  shell: ./create/roles/create-rhevm-resources/files/vdsmfake-setup.py "{{ vdsmfake }}"

@@ -1,0 +1,14 @@
+---
+#
+# Playbook to create fake resources on a rhevm appliances
+#
+
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../group_vars/vdsmfake.yml
+    - ../group_vars/vdsmfake.local.yml
+  roles:
+    - get-certificates
+    - create-rhevm-resources

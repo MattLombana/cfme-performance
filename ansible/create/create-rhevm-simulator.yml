@@ -1,0 +1,14 @@
+---
+#
+# Playbook to create rhevm-simulators
+#
+
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: false
+  vars_files:
+    - ../group_vars/all.yml
+    - ../group_vars/all.local.yml
+  roles:
+    - get-certificates
+    - create-rhevm-simulator

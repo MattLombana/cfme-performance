@@ -160,3 +160,104 @@ time_servers:
   - 0.pool.ntp.org
   - 1.pool.ntp.org
   - 2.pool.ntp.org
+
+
+###############################
+# CFME Workload and Worker Appliances to Create
+###############################
+cfme_appliances:
+  - rhevm_username: admin@internal
+    rhevm_password: admin-password
+    rhevm_hostname: FQDN.cfme.perf.com # ip address will not resolve
+    vm_name: CF-R0000-DB-Workload-56012
+    template: cloudforms-4.1-template
+    clone_template: True
+    cluster: Linux-Cluster
+    extra_disks:
+      vmdb:
+        size: 20 # in GB
+        interface: virtio
+        format: cow
+        location: vmstorage
+    NICS:
+      - eth0
+    cpus: 4
+    cores: 4
+    memory_size: 16 # in GB
+    host: supercomputer_1
+    migrate: user_migratable
+  - rhevm_username: admin@internal
+    rhevm_password: admin-password
+    rhevm_hostname: FQDN.cfme.perf.com # ip address will not resolve
+    vm_name: CF-R0000-DB-Workload-5.5.5.2
+    template: cloudforms-4.0-template
+    clone_template: False
+    cluster: Default
+    extra_disks: []
+    NICS: []
+    cpus: 4
+    cores: 4
+    memory_size: 16 # in GB
+    host: perf-test-01
+    migrate: migratable
+  - rhevm_username: admin@internal
+    rhevm_password: admin-password
+    rhevm_hostname: FQDN.cfme.perf.com # ip address will not resolve
+    vm_name: CF-R0000-5552-Worker-01
+    template: cloudforms-4.0-template
+    clone_template: False
+    cluster: Default
+    extra_disks: []
+    NICS: []
+    cpus: 4
+    cores: 4
+    memory_size: 16 # in GB
+    host: perf-test-01
+    migrate: pinned
+
+###############################
+# Driving Appliances to Create
+###############################
+driving_appliances:
+  - rhevm_username: admin@internal
+    rhevm_password: admin-password
+    rhevm_hostname: FQDN.cfme.perf.com # ip address will not resolve
+    vm_name: infra-56013-Driver-cfme-performance-01
+    template: Blank
+    vm_type: Server
+    cluster: Default
+    disks:
+      testDisk001:
+        size: 100 # in GB
+        location: vmstorage
+        interface: virtio
+        format: cow
+        allocation: thin
+    NICS:
+      - eth0
+    cpus: 4
+    cores: 4
+    memory_size: 8 # in GB
+    host: perf-test-01
+    migrate: pinned
+  - rhevm_username: admin@internal
+    rhevm_password: admin-password
+    rhevm_hostname: FQDN.cfme.perf.com # ip address will not resolve
+    vm_name: infra-5552-Driver-cfme-performance-01
+    template: Blank
+    vm_type: Server
+    cluster: Default
+    disks:
+      testDisk001:
+        size: 100 # in GB
+        location: vmstorage
+        interface: virtio
+        format: cow
+        allocation: thin
+    NICS:
+      - eth0
+    cpus: 4
+    cores: 4
+    memory_size: 8 # in GB
+    host: perf-test-01
+    migrate: user_migratable

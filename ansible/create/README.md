@@ -5,7 +5,13 @@ Playbooks used to create Virtual Machines and VM Simulators used for CFME Testin
 **Table of Contents**
 ========
 - [Playbooks](#playbooks)
+<<<<<<< 2a89532642499d1c9153f9b94c68a18147f4c731
   - [create-cfme-appliance.yml](#create-cfme-applianceyml)
+=======
+  - [create-workload-VM.yml](#create-workload-VMyml)
+  - [create-test-VM.yml](#create-test-VMyml)
+  - [create-simulator.yml](#create-simulatoryml)
+>>>>>>> Add initial playbooks, README, and base files for future playbooks
 
 # Playbooks
 
